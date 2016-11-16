@@ -12,13 +12,11 @@ class User extends Lucid {
     return this.hasMany('App/Model/Key');
   }
   //---------------------------------------
-  conSent() {
-    return this.hasMany('App/Model/Conversation','id','sender_id');
-  }
+  conversations() {
+  return this.hasMany('App/Model/Conversation','id','sender_id');
+}
   //---------------------------------------
-  conReceived() {
-    return this.hasMany('App/Model/Conversation','id','receiver_id');
-  }
+
   //---------------------------------------
 
 }
