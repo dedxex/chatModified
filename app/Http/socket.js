@@ -60,6 +60,7 @@ io.on('connection', function(socket){
       },function (err){
         console.error(err.stack);
       });
+      console.log("the conversation list is being send to",users[sender]);
       io.to(users[sender]).emit('conversation',list);
     }
 

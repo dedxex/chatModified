@@ -46,13 +46,13 @@
       var to_user = $('#to').val();
       var test = "{{users}}";
       var msg = $('#m').val();
-      //console.log("the form is submitted by " + user_name + " to " + to_user + " and the message is " + msg);
+
       data_server = {
         id: to_user,
         msg: msg,
         name: user_name
       };
-      //console.log("the value of dataserver is ",data_server)
+
       ////////////////
       socket.emit('messag',data_server);
       $('#m').val('');
@@ -65,7 +65,7 @@
         $('#messages').append($('<li>').text(value.message));
         console.log(value);
       })
-    })
+    });
 
     socket.on('u',function(activeusers) {
       activeUsers=activeusers;
