@@ -67,7 +67,15 @@ module.exports = function (callback) {
       */
       use(Helpers.makeNameSpace('Http', 'kernel'))
       use(Helpers.makeNameSpace('Http', 'routes'))
-
+      /*
+       |-----------------------------------------------------------
+       |   Loading Socket.io File
+       |----------------------------------------------------------
+       |
+       |   Here we register socket.js file to work with socket.io
+       |
+       */
+      use("App/Http/socket")
       /*
       |--------------------------------------------------------------------------
       | Load Database Factory

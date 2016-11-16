@@ -31,9 +31,11 @@ Route.get('/register','RegisterController.index');
 Route.post('/register','RegisterController.register');
 
 //chating and chat history
-Route.get('/chat','ConversationController.index');
-Route.post('/chat','ConversationController.store');
-Route.get('/history/:date','ConversationController.history');
+Route.group('auth-routes', () => {
+  Route.get('/chat','ConversationController.index');
+  Route.post('/chat','ConversationController.store');
+  Route.get('/history/:date','ConversationController.history');
+}).middleware('auth')
 
 //forget password
 Route.get('forgetpasswordrequest','ForgetpasswordController.index');
