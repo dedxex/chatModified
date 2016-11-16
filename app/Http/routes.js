@@ -17,4 +17,28 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+//application welcome page
+Route.on('/').render('welcome');
+
+//loging and logout
+Route.get('/login','AuthController.index');
+Route.post('/login','AuthController.login');
+Route.get('/logout','AuthController.logout');
+
+//activation and user registration
+Route.get('activate/:key','RegistrationController.activate');
+Route.get('/register','RegisterController.index');
+Route.post('/register','RegisterController.register');
+
+//chating and chat history
+Route.get('/chat','ConversationController.index');
+Route.post('/chat','ConversationController.store');
+Route.get('/history/:date','ConversationController.history');
+
+//forget password
+Route.get('forgetpasswordrequest','ForgetpasswordController.index');
+Route.post('forgetpasswordrequest','ForgetpasswordController.sendmail');
+Route.get('codeverification','ForgetpasswordController.sendcode');
+Route.post('codeverification','ForgetpasswordController.verifycode');
+
+

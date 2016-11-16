@@ -16,7 +16,6 @@ class User extends Lucid {
   return this.hasMany('App/Model/Conversation','id','sender_id');
 }
   //---------------------------------------
-
   //---------------------------------------
 
 }
