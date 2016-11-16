@@ -8,6 +8,7 @@ class MessagesTableSchema extends Schema {
     this.create('messages', (table) => {
       table.increments()
       table.integer('conversation_id').unsigned().references('id').inTable('conversations');
+      table.string('message');
       table.timestamps()
     })
   }
