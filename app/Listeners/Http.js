@@ -24,6 +24,19 @@ Http.handleError = function * (error, request, response) {
     })
     return
   }
+  Http.handleError = function * (error, request, response) {
+    if (error.name === 'ModelNotFoundException') {
+      yield response.status(404).sendView('404')
+      return
+    }
+
+    if (error.name === 'PasswordMisMatch') {
+      response.status(400).send('Invalid credentials')
+      return
+    }
+
+    response.status(error.status).send(error.message)
+  }
 
   /**
    * PRODUCTION REPORTER

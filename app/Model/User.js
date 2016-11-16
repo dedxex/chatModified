@@ -16,6 +16,13 @@ class User extends Lucid {
   return this.hasMany('App/Model/Conversation','id','sender_id');
 }
   //---------------------------------------
+  static get rules () {
+    return {
+      username: 'required|unique:users',
+      email: 'required|email|unique:users',
+      password: 'required',
+    }
+  }
   //---------------------------------------
 
 }
