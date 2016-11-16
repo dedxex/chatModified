@@ -1,13 +1,13 @@
 'use strict'
 
 const User = use('App/Model/User')
-const ActiveUser = use('App/Model/Auser')
 const Hash = use('Hash')
 const Database = use('Database');
+const Validator = use('Validator')
 class AuthController {
 
   * index(request, response) {
-    yield response.sendView('login')
+    yield response.sendView('auth.login')
   }
 
   * login(request, response)
@@ -22,7 +22,7 @@ class AuthController {
 
     if(!validation) {
       const message = "there is validataion errors in your form. Please provide correct email address and password";
-      response.sendView('login',message);
+      response.sendView('auth.login',message);
     }
 
     const message = {
@@ -40,7 +40,7 @@ class AuthController {
       return response.redirect('/chat')
     }
 
-    yield response.sendView('login', { error: loginMessage.error })
+    yield response.sendView('auth.login', { error: loginMessage.error })
   }
 
   * logout(request, response) {

@@ -26,7 +26,7 @@ Route.post('/login','AuthController.login');
 Route.get('/logout','AuthController.logout');
 
 //activation and user registration
-Route.get('activate/:key','RegistrationController.activate');
+Route.get('activate/:key','RegisterController.activate');
 Route.get('/register','RegisterController.index');
 Route.post('/register','RegisterController.register');
 
@@ -38,7 +38,7 @@ Route.get('/history/:date','ConversationController.history');
 //forget password
 Route.get('forgetpasswordrequest','ForgetpasswordController.index');
 Route.post('forgetpasswordrequest','ForgetpasswordController.sendmail');
-Route.get('codeverification','ForgetpasswordController.sendcode');
+Route.get('codeverification','ForgetpasswordController.getcode');
 Route.post('codeverification','ForgetpasswordController.verifycode');
 
 

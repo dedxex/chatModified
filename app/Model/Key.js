@@ -3,7 +3,10 @@
 const Lucid = use('Lucid')
 
 class Key extends Lucid {
-  user () {
+  temp_users () {
+    return this.belongsTo('App/Model/TempUser')
+  }
+  users () {
     return this.belongsTo('App/Model/User')
   }
 }
