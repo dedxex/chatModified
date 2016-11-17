@@ -60,9 +60,9 @@
     });
 
     socket.on('conversation',function(msgs) {
-      console.log("conversation event on client triggred with responce "+msgs);
+      console.log("conversation event on client triggred with responce ",msgs);
       $.each(msgs, function(index, value){
-        $('#messages').append($('<li>').text(value.message));
+        $('#messages').append($('<li>').text(value));
         console.log(value);
       })
     });

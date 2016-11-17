@@ -33,6 +33,7 @@ io.on('connection', function(socket){
     const receiver =data_server.touser;
     const sender = data_server.fromuser;
     let Aconversation = {};
+    let messagesj = [];
     co(function* () {
       //geting user information
       const re = yield User.findByOrFail('username',receiver);
@@ -45,19 +46,23 @@ io.on('connection', function(socket){
       console.log('covner is this',conver.id);
       co(function* () {
            Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id});
+        Aconversation.map((a) => {
+          messagesj.push(a.message);
+        });
       }).then(function(response) {
-          console.log('the messages are ',Aconversation);
+        console.log('the messages are ',messagesj);
+        io.to(users[sender]).emit('conversation',messagesj);
       },function(err){
         console.error(err.stack);
       })
-      return A;
     }).then(function (A) {
     }, function (err) {
       console.error(err.stack);
     });
-    console.log("the messages are ",Aconversation);
+
+    console.log("the messages are these ",messagesj);
       console.log("the conversation list is being send to",users[sender]);
-      io.to(users[sender]).emit('conversation',Aconversation);
+
 
   });
   ///////////////////////////////////////////
