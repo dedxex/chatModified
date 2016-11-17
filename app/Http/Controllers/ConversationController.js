@@ -46,8 +46,11 @@ class ConversationController {
     let Aconversation = {};
     let messages = [];
 
-    const todate = request.input('to');//to date
-    const fromdate = request.input('from');//from date
+    const todat = request.input('to');//to date
+    const fromdat = request.input('from');//from date
+    const todate = todat+" 00:00:00";
+    const fromdate = fromdat+" 00:00:00";
+    console.log("the from date is",fromdate);
 
     const touser = request.input('touser');
     const fromuser =  yield request.session.get('loggedUser');
