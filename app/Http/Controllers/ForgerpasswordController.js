@@ -60,7 +60,8 @@ class ForgerpasswordController {
       }
     }
     else {
-      yield response.sendView('/')
+      const message =" the key did not matched";
+      yield response.sendView('welcome',{ message : message});
     }
 
   }
@@ -89,7 +90,8 @@ class ForgerpasswordController {
           .table('keys')
           .where('id', token.id)
           .update('is_used', '0')
-        return response.redirect('/login')
+        const message = "the password was successfully changed"
+        yield response.sendView('auth.login',{ message : message })
       }
       else {
         console.log("failed")

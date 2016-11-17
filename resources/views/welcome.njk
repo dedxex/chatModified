@@ -1,7 +1,23 @@
 {% extends 'master' %}
 
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    const mess = "{{message}}";
+    if(mess) {
+      $('#success').append($('<strong>').text(mess));
+    }
+    $(".alert").click(function(){
+      $(this).hide();
+    });
+  });
+</script>
 <div class="container">
+  <div class="alert alert-info">
+    <div id="success">Hello !</div>
+  </div>
   <h2 class="display-1">
     welcome to the chat application
   </h2>
