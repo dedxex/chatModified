@@ -6,9 +6,8 @@
 <script>
   $(document).ready(function() {
     var touser;
-    //var history = {{ data.chathistory }}
     console.log('the selected user is ',touser);
-    $.get( "http://localhost:3333/get-users/", function( data ) {
+    $.get( "http://localhost:3333/getusers/", function( data ) {
       $.each(data, function(index, value){
         console.log("val",value);
         $('#to').append($('<option>').text(value.username));
@@ -20,7 +19,7 @@
 
 <div class="container">
   <h2>This is the Chat History of {{key}}</h2>
-  <form class="form-horizontal" role="form" method="POST" action="/gethistory">
+  <form class="form-horizontal" role="form" method="post" action="/gethistory">
 
     {{ csrfField }}
     From : <input type="datetime" id="#from" name="from" />
@@ -40,7 +39,7 @@
   <ul class="list-group">
     {% for m in messages %}
     <li class="list-group-item">
-      {{m.message}}
+      {{m}}
     </li>
     {% endfor %}
   </ul>

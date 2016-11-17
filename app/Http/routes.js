@@ -35,7 +35,7 @@ Route.group('auth-routes', () => {
   Route.get('/chat','ConversationController.index');
   Route.post('/chat','ConversationController.store');
   Route.get('/history','ConversationController.history');
-  Route.get('/history','ConversationController.gethistory');
+  Route.post('/gethistory','ConversationController.gethistory');
 }).middleware('auth')
 
 //forget password
@@ -43,5 +43,7 @@ Route.get('forgetpasswordrequest','ForgetpasswordController.index');
 Route.post('forgetpasswordrequest','ForgetpasswordController.sendmail');
 Route.get('codeverification','ForgetpasswordController.getcode');
 Route.post('codeverification','ForgetpasswordController.verifycode');
+
+Route.get('getusers','ConversationController.getUsers')
 
 
