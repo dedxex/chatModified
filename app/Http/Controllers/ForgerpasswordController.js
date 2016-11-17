@@ -1,12 +1,16 @@
 'use strict'
-
+const User = use('App/Model/User')
+const Database = use('Database');
+const Key = use('App/Model/Key');
+const Hash = use('Hash')
+const Mail = use('Mail')
 class ForgerpasswordController {
   * index(request,response) {
     //send a form to fill the change password request
     yield request.auth.logout()
-    yield response.sendView('enteremail')
+    yield response.sendView('forget.entermail')
   }
-
+  //-----------------------------------------------------
   * sendmail(request,response) {
     //send an email to the user with the otp code and the url to change the password
 
@@ -29,30 +33,29 @@ class ForgerpasswordController {
     key.type="forgot_password"
     yield  key.save()
 
-    yield Mail.send('emails.emailforgotpassword',temp, (message) => {
+    yield Mail.send('email.emailforgetpassword',temp, (message) => {
       console.log("the token sent is "+temp.key)
       message.to(email, temp.username)
       message.from('postmaster@sandbox9f5a0a5116914f43a08d365a5e353692.mailgun.org')
       message.subject('Password Change Request')
     })
-    yield response.sendView('enterchangepasswordkey',temp)
+    yield response.sendView('forget.enterkey',temp)
   }
 
-
+  //-----------------------------------------------------
   * getcode(request,response) {
-    //user has clicked the link in email now send it to the web page to change the password
-    //const id = request.param('id')
-    const key = request.input("name");
+
+    const key = request.input("otp");
     const tempKey = yield request.session.get('tokenkey')
     //console.log("the user "+email+" has requested to change password")
     if(key==tempKey) {
-      console.log("the the key in the change metod of the register controller is ",key)
+      console.log("the the key in the getmethos metod of the Forgetpasswordcontroller is ",key)
       const token = yield Key.findByOrFail('key',key)
-      if(token.status == 0) {
-        yield response.sendView('forgotpassword',key)
+      if(!(token.is_used == 1)) {
+        yield response.sendView('forget.changepassword',key)
       }
       else {
-        yield response.sendView('login')
+        yield response.sendView('auth.login')
       }
     }
     else {
@@ -60,15 +63,14 @@ class ForgerpasswordController {
     }
 
   }
-  * verifycode(request,response) {
+  //-----------------------------------------------------
+  * changepassword
+  (request,response) {
     //user has submitted its changed password now update it
-    console.log("in the impchange function of the register controller")
-    //console.log("the key got from the web page in the impchange method of the register controller is ",id)
+    console.log("in the verifycode method of the ForgetPassword controller");
     const password = yield Hash.make(request.input('password'))
-    console.log("passed password")
-    //const key1 = yield request.input('keytoken')
-    console.log("passed key1 ")
-    //console.log("success the password and key is "+password+" and key is "+key1)
+    console.log("passed password");
+
     const key1 = yield request.session.get('tokenkey')
     if(key1) {
       console.log("the key to activate is ",key1)
@@ -85,7 +87,7 @@ class ForgerpasswordController {
         const changestatus = yield Database
           .table('keys')
           .where('id', token.id)
-          .update('status', '0')
+          .update('is_used', '0')
         return response.redirect('/login')
       }
       else {

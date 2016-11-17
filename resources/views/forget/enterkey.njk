@@ -1,0 +1,46 @@
+{% extends 'master' %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--var key = $('#email').val();-->
+<!--});-->
+<!--</script>-->
+<!--<script>-->
+<!--const username = "{{temp.username}}"-->
+<!--</script>-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">Enter key to change password</div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form" method="POST" action="/codeverification">
+
+
+            {{ csrfField }}
+
+
+            <div class="form-group">
+              <label for="email" class="col-md-4 control-label">Enter otp</label>
+
+              <div class="col-md-6">
+                <input id="email" type="text" class="form-control" name="otp" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa fa-btn fa-sign-in"></i>submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
