@@ -37,6 +37,7 @@ Route.group('auth-routes', () => {
   Route.get('/history','ConversationController.history');
   Route.post('/gethistory','ConversationController.gethistory');
 }).middleware('auth')
+Route.get('getusers','ConversationController.getUsers')
 
 //forget password
 Route.get('/forgetpasswordrequest','ForgerpasswordController.index');
@@ -44,6 +45,6 @@ Route.post('/forgetpasswordrequest','ForgerpasswordController.sendmail');
 Route.post('/codeverification','ForgerpasswordController.getcode');
 Route.post('/changepassword','ForgerpasswordController.changepassword');
 
-Route.get('getusers','ConversationController.getUsers')
+
 
 

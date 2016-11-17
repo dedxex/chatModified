@@ -40,6 +40,7 @@
       var selectedUser = $('select').val();
       data_server.touser = selectedUser;
       console.log("user has been selected",selectedUser)
+      $('.hello').remove()
       socket.emit('getconversationlist',data_server);
     })
     $('form').submit(function(){
@@ -62,7 +63,7 @@
     socket.on('conversation',function(msgs) {
       console.log("conversation event on client triggred with responce ",msgs);
       $.each(msgs, function(index, value){
-        $('#messages').append($('<li>').text(value));
+        $('#messages').append($('<li class="hello">').text(value));
         console.log(value);
       })
     });
@@ -86,7 +87,7 @@
     });
 
     socket.on('message', function(msg){
-      $('#messages').append($('<li>').text(msg));
+      $('#messages').append($('<li class="hello">').text(msg));
     });
 
     console.log(activeUsers);
