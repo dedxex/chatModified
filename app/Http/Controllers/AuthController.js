@@ -34,13 +34,14 @@ class AuthController {
     const authCheck = yield request.auth.attempt(email,password);
     if (authCheck) {
       //getting credentials of the logged in user from the database
+      const s = message.success;
       const loggedUser = yield Database.from('users').where('email', email).first()
 
       yield request.session.put('loggedUser',loggedUser.username)
-      return response.redirect('/chat')
+      return response.redirect('/chat');
     }
 
-    yield response.sendView('auth.login', { error: loginMessage.error })
+    yield response.sendView('auth.login',message.error)
   }
 
   * logout(request, response) {

@@ -1,17 +1,25 @@
 {% extends 'master' %}
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!--<script>-->
-<!--$(document).ready(function(){-->
-<!--var key = $('#email').val();-->
-<!--});-->
-<!--</script>-->
-<!--<script>-->
-<!--const username = "{{temp.username}}"-->
-<!--</script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    const mess = "{{message}}";
+    if(mess) {
+      $('#success').append($('<strong>').text(mess));
+    }
+    $(".alert").click(function(){
+      $(this).hide();
+    });
+  });
+</script>
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
+      <div class="alert alert-success">
+        <div id="success">An Otp code has been sent to the email address</div>
+      </div>
       <div class="panel panel-default">
         <div class="panel-heading">Enter key to change password</div>
         <div class="panel-body">

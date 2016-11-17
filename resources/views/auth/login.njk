@@ -1,12 +1,27 @@
 {% extends 'master' %}
 
-
-
 {% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    const mess = "{{message}}";
+    if(mess) {
+      $('#success').append($('<strong>').text(mess));
+    }
+    $(".alert").click(function(){
+      $(this).hide();
+    });
+  });
+</script>
 
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+          <div class="alert alert-info">
+            <div id="success">Enter your login credentials here</div>
+          </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">

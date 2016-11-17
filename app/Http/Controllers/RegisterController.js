@@ -58,12 +58,9 @@ class RegisterController {
       message.subject('welcome to chat Applicaion')
     })
 
+  let message = 'Verification Link has been sent to the registered email address, please follow the link to activate your account';
 
-    var registerMessage = {
-      success: 'Registration Successful! Now go ahead and login'
-    }
-
-    yield response.sendView('auth.login', { registerMessage : registerMessage })
+    yield response.sendView('auth.login',{ message : message });
   }
 
   * activate(request, response) {

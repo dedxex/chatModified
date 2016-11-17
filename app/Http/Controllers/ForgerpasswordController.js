@@ -55,7 +55,8 @@ class ForgerpasswordController {
         yield response.sendView('forget.changepassword',key)
       }
       else {
-        yield response.sendView('auth.login')
+        const message = "the key is already used"
+        yield response.sendView('auth.login',{ message : message })
       }
     }
     else {
