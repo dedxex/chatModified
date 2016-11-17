@@ -41,28 +41,23 @@ io.on('connection', function(socket){
       console.log("records found from the database for sender",se);
       //create or find the conversation record
 
-      Aconversation = yield Database.from('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id });
-      return Aconversation;
-    }).then(function (Aconversation) {
-      console.log("the conversation found from the database",Aconversation);
+      const conver = yield Database.table('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id }).first();
+      console.log('covner is this',conver.id);
+      co(function* () {
+           Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id});
+      }).then(function(response) {
+          console.log('the messages are ',Aconversation);
+      },function(err){
+        console.error(err.stack);
+      })
+      return A;
+    }).then(function (A) {
     }, function (err) {
       console.error(err.stack);
     });
-//if there is a record for conversation then retreive messages
-    if(Aconversation.length > 0) {
-      const conversation_id = Aconversation.id;
-
-      co(function* () {
-        const list = yield Database.from('messages').where('conversation_id',conversation_id);
-        return list;
-      }).then(function(list){
-        console.log("the messages I got from the database is ",list);
-      },function (err){
-        console.error(err.stack);
-      });
+    console.log("the messages are ",Aconversation);
       console.log("the conversation list is being send to",users[sender]);
-      io.to(users[sender]).emit('conversation',list);
-    }
+      io.to(users[sender]).emit('conversation',Aconversation);
 
   });
   ///////////////////////////////////////////
@@ -98,8 +93,6 @@ io.on('connection', function(socket){
     }, function (err) {
       console.error(err.stack);
     });
-
-
 
     console.log("messag event triggered");
     console.log("message"+data_server.msg+" is sent to " + data_server.id + ","  + " from" + data_server.name);
