@@ -34,7 +34,8 @@ Route.post('/register','RegisterController.register');
 Route.group('auth-routes', () => {
   Route.get('/chat','ConversationController.index');
   Route.post('/chat','ConversationController.store');
-  Route.get('/history/:date','ConversationController.history');
+  Route.get('/history','ConversationController.history');
+  Route.get('/history','ConversationController.gethistory');
 }).middleware('auth')
 
 //forget password

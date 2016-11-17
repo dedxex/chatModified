@@ -1,0 +1,48 @@
+{% extends 'master' %}
+{% block content %}
+
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+<script>
+  $(document).ready(function() {
+    var touser;
+    //var history = {{ data.chathistory }}
+    console.log('the selected user is ',touser);
+    $.get( "http://localhost:3333/get-users/", function( data ) {
+      $.each(data, function(index, value){
+        console.log("val",value);
+        $('#to').append($('<option>').text(value.username));
+      });
+    });
+
+  });
+</script>
+
+<div class="container">
+  <h2>This is the Chat History of {{key}}</h2>
+  <form class="form-horizontal" role="form" method="POST" action="/gethistory">
+
+    {{ csrfField }}
+    From : <input type="datetime" id="#from" name="from" />
+    To : <input type="datetime" id="#to" name="to"/>
+    <button class="btn btn-primary" type="submit">go</button>
+    <h1>select user to see chat history</h1>
+
+    <select id="to" name="touser">
+
+    </select>
+    <br />
+  </form>
+
+  <!--<ul id="messages">-->
+  <!--</ul>-->
+  <br/>
+  <ul class="list-group">
+    {% for m in messages %}
+    <li class="list-group-item">
+      {{m.message}}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
