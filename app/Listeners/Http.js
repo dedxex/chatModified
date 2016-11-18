@@ -24,6 +24,7 @@ Http.handleError = function * (error, request, response) {
     })
     return
   }
+
   Http.handleError = function * (error, request, response) {
     if (error.name === 'ModelNotFoundException') {
       yield response.status(404).sendView('404')

@@ -24,7 +24,7 @@ class RegisterController {
     const validation = yield Validator.validate(tempv, User.rules)
 
     if(!validation) {
-      const message = "there is validataion errors in your form." +
+      const message = " there is validataion errors in your form." +
         "Email and username should be unique and all fields are required";
       response.sendView('auth.register',message);
     }
@@ -58,7 +58,7 @@ class RegisterController {
       message.subject('welcome to chat Applicaion')
     })
 
-  let message = 'Verification Link has been sent to the registered email address, please follow the link to activate your account';
+  let message = ' Verification Link has been sent to the registered email address, please follow the link to activate your account';
 
     yield response.sendView('auth.login',{ message : message });
   }
@@ -67,6 +67,7 @@ class RegisterController {
     const id = request.param('key')
     console.log("the key to activate is "+id)
     const token = yield Key.findByOrFail('key',id)
+
     console.log(token)
     if(token) {
       console.log("the token key found from the database is "+token.key)
@@ -91,11 +92,12 @@ class RegisterController {
         .delete();
       yield user.save();
 
-
-      return response.redirect('/login')
+      const message = " your account is activated, Now you can login"
+      yield response.sendView('auth.login',{ message : message })
     }
     else {
-      console.log("failed")
+      const message = " activation failed"
+      yield response.sendView('auth.login',{ message : message })
     }
 
   }
