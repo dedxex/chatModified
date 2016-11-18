@@ -94,7 +94,7 @@ class ForgerpasswordController {
           .table('keys')
           .where('id',token.id)
           .delete();
-        const message = "the password was successfully changed"
+        const message = " the password was successfully changed"
         yield response.sendView('auth.login',{ message : message })
       }
       else {
