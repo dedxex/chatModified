@@ -51,7 +51,7 @@ io.on('connection', function(socket){
       const conver = yield Database.table('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id }).first();
       console.log('covner is this',conver.id);
       co(function* () {
-           Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id});
+           Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id}).orderBy('id', 'desc');
         Aconversation.map((a) => {
           messagesj.push(a.message);
         });
