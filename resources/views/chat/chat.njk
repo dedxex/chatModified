@@ -7,8 +7,8 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font: 13px Helvetica, Arial; }
-  form { background: #eee; padding: 3px; position: fixed; bottom: 0; width: 45%; }
-  form input { border: 0; padding: 15px; width: 50%; margin-right: .5%; }
+  form { background: #eee; padding: 3px; position: fixed; bottom: 0; width: 75%; }
+  form input { border: 0; padding: 15px; width: 70%; margin-right: .5%; }
   form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
   #messages { list-style-type: none; margin: 0; padding: 0; }
   #messages li { padding: 5px 10px; }
@@ -130,7 +130,7 @@
       data_server.touser = toauser;
       $('h5').remove();
       $('#fromauser').append($('<h5>').text(fromauser));
-      socket.emit('getconversationlist',data_server);
+     // socket.emit('getconversationlist',data_server);
       $('#messages').append($('<li class="hello" id=msg>').text(msg));
     });
     console.log(activeUsers);
@@ -138,13 +138,13 @@
 
 </script>
 
-<div class="col-xs-6">
+<div class="col-xs-3">
   <h3>here is the list of active users users</h3>
   <div class="col-xs-4">
     <div class="activee" id="active"></div>
   </div>
 </div>
-<div class="col-xs-6">
+<div class="col-xs-9">
   <h3>Conversation</h3>
   <div class="form-group">
     <label for="To">To</label>
