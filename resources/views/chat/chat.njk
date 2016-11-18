@@ -121,7 +121,8 @@
       var data_server = {};
       data_server.fromuser = fromauser;
       data_server.touser = toauser;
-      $('#fromauser').append($('<h2>').text(fromauser));
+      $('h5').remove();
+      $('#fromauser').append($('<h5>').text(fromauser));
       socket.emit('getconversationlist',data_server);
       $('#messages').append($('<li class="hello" id=msg>').text(msg));
     });

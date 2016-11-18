@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="583b7ef9-b61a-4d13-89ce-aa0a458a4410" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.js" afterPath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/socket.js" afterPath="$PROJECT_DIR$/app/Http/socket.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/chat/chat.njk" afterPath="$PROJECT_DIR$/resources/views/chat/chat.njk" />
     </list>
     <ignored path="chat.iws" />
@@ -47,21 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chat.njk" pinned="false" current-in-tab="false">
+      <file leaf-file-name="chat.njk" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/chat/chat.njk">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="150" column="42" selection-start-line="150" selection-start-column="42" selection-end-line="150" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="socket.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/socket.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="59" column="60" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
+            <state relative-caret-position="303">
+              <caret line="123" column="23" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -113,8 +101,8 @@
         <option value="$PROJECT_DIR$/app/Listeners/Http.js" />
         <option value="$PROJECT_DIR$/resources/views/master.njk" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ConversationController.js" />
-        <option value="$PROJECT_DIR$/resources/views/chat/chat.njk" />
         <option value="$PROJECT_DIR$/app/Http/socket.js" />
+        <option value="$PROJECT_DIR$/resources/views/chat/chat.njk" />
       </list>
     </option>
   </component>
@@ -494,12 +482,12 @@
       <workItem from="1479277859822" duration="24994000" />
       <workItem from="1479358501922" duration="29617000" />
       <workItem from="1479444768219" duration="10143000" />
-      <workItem from="1479455119398" duration="2206000" />
+      <workItem from="1479455119398" duration="2498000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66960000" />
+    <option name="totallyTimeSpent" value="67252000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1384" height="738" extended-state="0" />
@@ -854,18 +842,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/chat/chat.njk">
+    <entry file="file://$PROJECT_DIR$/app/Http/socket.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="150" column="42" selection-start-line="150" selection-start-column="42" selection-end-line="150" selection-end-column="42" />
+        <state relative-caret-position="-740">
+          <caret line="59" column="60" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/socket.js">
+    <entry file="file://$PROJECT_DIR$/resources/views/chat/chat.njk">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="59" column="60" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
+        <state relative-caret-position="303">
+          <caret line="123" column="23" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="23" />
           <folding />
         </state>
       </provider>
