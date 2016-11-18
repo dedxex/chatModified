@@ -9,7 +9,7 @@ const Database = use('Database');
 const users = {};
 const soccerid={};
 
-//a NEW USER IS CONNECTED
+//a NEW USER IS CONNECTED//============================================================
 io.on('connection', function(socket){
   socket.on('register',function(name) {
     users[name]=socket.id;
@@ -20,12 +20,12 @@ io.on('connection', function(socket){
     io.emit('u',users);
   });
 
-  //PASS THE LIST OF ACTIVE USERS TO THE CLIENT
+  //PASS THE LIST OF ACTIVE USERS TO THE CLIENT//=========================================
   socket.on('getactiveuserslist',function() {
     io.emit('u',users)
   })
 
-  //USER HAS SELECTED ANOTHER USER, SO PASS IT THE CONVERSATION LIST
+  //USER HAS SELECTED ANOTHER USER, SO PASS IT THE CONVERSATION LIST//=====================
   socket.on('getconversationlist',function(data_server) {
     console.log("in the getconversationlist method");
     const socketId = {};
@@ -35,13 +35,19 @@ io.on('connection', function(socket){
     let Aconversation = {};
     let messagesj = [];
     co(function* () {
-      //geting user information
-      const re = yield User.findByOrFail('username',receiver);
-      const se = yield User.findByOrFail('username',sender);
+      //geting user information//==========================================================
+      let re = yield User.findByOrFail('username',receiver);
+      let se = yield User.findByOrFail('username',sender);
+      //interchanging
+      if(re.id>se.id){
+        let temp = {};
+        temp = re;
+        re = se;
+        se = temp;
+      }
       console.log("records found from the database for receiver",re);
       console.log("records found from the database for sender",se);
-      //create or find the conversation record
-
+      //create or find the conversation record//=============================================
       const conver = yield Database.table('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id }).first();
       console.log('covner is this',conver.id);
       co(function* () {
@@ -52,6 +58,7 @@ io.on('connection', function(socket){
       }).then(function(response) {
         console.log('the messages are ',messagesj);
         io.to(users[sender]).emit('conversation',messagesj);
+        io.to(users[receiver]).emit('conversation',messagesj);
       },function(err){
         console.error(err.stack);
       })
@@ -59,13 +66,12 @@ io.on('connection', function(socket){
     }, function (err) {
       console.error(err.stack);
     });
-
     console.log("the messages are these ",messagesj);
-      console.log("the conversation list is being send to",users[sender]);
-
-
+    console.log("the conversation list is being send to",users[sender]);
   });
-  ///////////////////////////////////////////
+
+  ///////////////////////////////////////////==============================================
+
   socket.on('messag',function(data_server){
     //get data
     const receiver =data_server.id;
@@ -74,8 +80,15 @@ io.on('connection', function(socket){
     const messageObject = new Message();
     co(function* () {
       //geting user information
-      const re = yield User.findByOrFail('username',receiver);
-      const se = yield User.findByOrFail('username',sender);
+      let re = yield User.findByOrFail('username',receiver);
+      let se = yield User.findByOrFail('username',sender);
+      //interchanging
+      if(re.id>se.id){
+        let temp = {};
+        temp = re;
+        re = se;
+        se = temp;
+      }
       //create or find the conversation record
       Aconversation = yield Conversation.findOrCreate(
         { sender_id: se.id,receiver_id : re.id },
@@ -85,7 +98,9 @@ io.on('connection', function(socket){
       const Aconversationid = Aconversation.id;
       return Aconversationid;
     }).then(function (Aconversationid) {
-      //creating suitable record in the message table
+
+//=============//creating suitable record in the message table//=================
+
       co(function* () {
         messageObject.conversation_id = Aconversationid;
         messageObject.message = data_server.msg;
@@ -98,15 +113,20 @@ io.on('connection', function(socket){
     }, function (err) {
       console.error(err.stack);
     });
-
     console.log("messag event triggered");
     console.log("message"+data_server.msg+" is sent to " + data_server.id + ","  + " from" + data_server.name);
 
     const name = data_server.id;
+    //const fromtaranjeet = data_server.name;
     const socketId = users[data_server.id];
+    const socketId2 = users[data_server.name];
     console.log("preparing to send to socketId "+socketId+" of name "+name+" by "+data_server.name);
-    socket.broadcast.to(socketId).emit('message', data_server.msg);
+    //socket.broadcast.to(socketId).emit('message', data_server.msg);
+    io.to(socketId).emit('message', data_server);
+    io.to(socketId2).emit('message', data_server);
   });
+
+//==============================================================
 
   socket.on('disconnect', function () {
     console.log("user with socketid "+this.id+" is disconnected")

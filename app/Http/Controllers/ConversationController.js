@@ -55,8 +55,15 @@ class ConversationController {
     const touser = request.input('touser');
     const fromuser =  yield request.session.get('loggedUser');
 
-    const re = yield User.findByOrFail('username',touser);
-    const se = yield User.findByOrFail('username',fromuser);
+    let re = yield User.findByOrFail('username',touser);
+    let se = yield User.findByOrFail('username',fromuser);
+
+    if(re.id>se.id){
+      let temp = {};
+      temp = re;
+      re = se;
+      se = temp;
+    }
 
     const conver = yield Database.table('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id }).first();
 

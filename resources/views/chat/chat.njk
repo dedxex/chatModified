@@ -7,8 +7,8 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font: 13px Helvetica, Arial; }
-  form { background: #eee; padding: 3px; position: fixed; bottom: 0; width: 50%; }
-  form input { border: 0; padding: 15px; width: 90%; margin-right: .5%; }
+  form { background: #eee; padding: 3px; position: fixed; bottom: 0; width: 45%; }
+  form input { border: 0; padding: 15px; width: 50%; margin-right: .5%; }
   form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
   #messages { list-style-type: none; margin: 0; padding: 0; }
   #messages li { padding: 5px 10px; }
@@ -40,6 +40,7 @@
     console.log("the logged user is",user_name);
     socket.emit('register',user_name);
     var data_server;
+    let fromauser = " ";
     //============================================================================
 
     $('select').click(function() {
@@ -93,9 +94,15 @@
     socket.on('u',function(activeusers) {
       activeUsers=activeusers;
       $.each(activeUsers, function(index, value){
+        if(index===user_name) {
+          return
+        }
         $('#to').append($('<option>').text(index));
       });
       $.each(activeUsers, function(index, value){
+        if(index===user_name) {
+          return
+        }
         $('#active').append($('<h2>').text(index));
       });
     });
@@ -105,7 +112,17 @@
       socket.emit('u')
     });
 //===========================================================================
-    socket.on('message', function(msg){
+    socket.on('message', function(data){
+      $('.hello').remove();
+      var msg = data.msg;
+      var fromauser = data.name;
+      var toauser = data.id;
+
+      var data_server = {};
+      data_server.fromuser = fromauser;
+      data_server.touser = toauser;
+      $('#fromauser').append($('<h2>').text(fromauser));
+      socket.emit('getconversationlist',data_server);
       $('#messages').append($('<li class="hello" id=msg>').text(msg));
     });
     console.log(activeUsers);
@@ -131,7 +148,7 @@
   </div>
 
   <div>
-    <h4>messages</h4>
+    <h4>messages from <div id="fromauser"></div></h4>
     <ul id="messages"></ul>
   </div>
   {{ form.open({ action:'ConversationController.store' }) }}
