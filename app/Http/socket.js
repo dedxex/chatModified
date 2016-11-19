@@ -170,8 +170,8 @@ io.on('connection', function(socket){
     const socketId2 = users[data_server.name];
     console.log("preparing to send to socketId "+socketId+" of name "+name+" by "+data_server.name);
     //socket.broadcast.to(socketId).emit('message', data_server.msg);
-    io.to(socketId).emit('message', data_server.msg);
-    io.to(socketId2).emit('message', data_server.msg);
+    io.to(socketId).emit('message', data_server);
+    io.to(socketId2).emit('message', data_server);
   });
 
 //==============================================================

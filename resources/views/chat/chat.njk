@@ -45,6 +45,8 @@
     var data_server;
     let fromauser = " ";
     let tempAuser = {};
+    var tempu = "";
+
     //============================================================================
 
     $('select').click(function() {
@@ -68,9 +70,11 @@
       const temp = $('h2').text();
       console.log("h2 is clicked",temp);
       var selectedUser = $(this).text();
+      tempu = selectedUser;
       console.log('this is the selected user',selectedUser);
       data_server.touser = selectedUser;
       fromauser = selectedUser;
+      to_user=selectedUser;
       console.log("user has been selected",selectedUser);
       $('h5').remove();
       $('#fromauser').append($('<h5>').text(fromauser));
@@ -82,7 +86,10 @@
     //===========================================================
 
     $('form').submit(function(){
-      var to_user = $('#to').val();
+      var to_user = tempu;
+    if(!to_user){
+      to_user = $('#to').val();
+    }
       var test = "{{users}}";
       var msg = $('#m').val();
       data_server = {
@@ -126,7 +133,11 @@
 
 //===========================================================================
     socket.on('message', function(msg){
-      $('#messagesj').append($('<li class="hello" id=msg>').text(msg));
+      var name = msg.name;
+      fromauser = name;
+      $('h5').remove();
+      $('#fromauser').append($('<h5>').text(fromauser));
+      $('#messagesj').append($('<li class="hello" id=msg>').text(msg.msg));
     });
     console.log(activeUsers);
   });
@@ -151,7 +162,7 @@
   </div>
 
   <div>
-    <h4>send with <b><div id="fromauser"></div></b></h4>
+    <h4>with <b><div id="fromauser"></div></b></h4>
     <ul id="messages"></ul>
     <ul id="messagesj"></ul>
   </div>
