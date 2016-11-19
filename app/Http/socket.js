@@ -51,14 +51,62 @@ io.on('connection', function(socket){
       const conver = yield Database.table('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id }).first();
       console.log('covner is this',conver.id);
       co(function* () {
-           Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id}).orderBy('id', 'desc');
+           Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id}).orderBy('id', 'desc').limit(2);
         Aconversation.map((a) => {
           messagesj.push(a.message);
         });
       }).then(function(response) {
+        messagesj.reverse();
         console.log('the messages are ',messagesj);
         io.to(users[sender]).emit('conversation',messagesj);
-        io.to(users[receiver]).emit('conversation',messagesj);
+        //io.to(users[receiver]).emit('conversation',messagesj);
+      },function(err){
+        console.error(err.stack);
+      })
+    }).then(function (A) {
+    }, function (err) {
+      console.error(err.stack);
+    });
+    console.log("the messages are these ",messagesj);
+    console.log("the conversation list is being send to",users[sender]);
+  });
+
+  ///////////////////////////////////////////==============================================
+//USER HAS RECIVED A MESSAGE, SO PASS IT THE MESSAGE LIST//=====================
+  socket.on('getmessagelist',function(data_server) {
+    console.log("in the getconversationlist method");
+    const socketId = {};
+    //get data
+    const receiver =data_server.touser;
+    const sender = data_server.fromuser;
+    let Aconversation = {};
+    let messagesj = [];
+    co(function* () {
+      //geting user information//==========================================================
+      let re = yield User.findByOrFail('username',receiver);
+      let se = yield User.findByOrFail('username',sender);
+      //interchanging
+      if(re.id>se.id){
+        let temp = {};
+        temp = re;
+        re = se;
+        se = temp;
+      }
+      console.log("records found from the database for receiver",re);
+      console.log("records found from the database for sender",se);
+      //create or find the conversation record//=============================================
+      const conver = yield Database.table('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id }).first();
+      console.log('covner is this',conver.id);
+      co(function* () {
+           Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id}).orderBy('id', 'desc').limit(2);
+        Aconversation.map((a) => {
+          messagesj.push(a.message);
+        });
+      }).then(function(response) {
+        messagesj.reverse();
+        console.log('the messages are ',messagesj);
+        io.to(users[sender]).emit('conversation',messagesj);
+        //io.to(users[receiver]).emit('conversation',messagesj);
       },function(err){
         console.error(err.stack);
       })
@@ -122,8 +170,8 @@ io.on('connection', function(socket){
     const socketId2 = users[data_server.name];
     console.log("preparing to send to socketId "+socketId+" of name "+name+" by "+data_server.name);
     //socket.broadcast.to(socketId).emit('message', data_server.msg);
-    io.to(socketId).emit('message', data_server);
-    io.to(socketId2).emit('message', data_server);
+    io.to(socketId).emit('message', data_server.msg);
+    io.to(socketId2).emit('message', data_server.msg);
   });
 
 //==============================================================
