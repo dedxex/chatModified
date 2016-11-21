@@ -34,7 +34,7 @@ class AuthController {
       // Attempt to login with email and password
       const authCheck = yield request.auth.attempt(email,password);
     }catch(err) {
-      const message = "username or password is not correct";
+      const message = " username or password is not correct";
       yield response.sendView('auth.login',{ message : message });
     }
 
@@ -42,6 +42,7 @@ class AuthController {
     //   const message = "username or password is not correct";
     //   yield request.sendView('auth.login',{ message : message });
     // }
+    const authCheck = yield request.auth.attempt(email,password);
     if (authCheck) {
       //getting credentials of the logged in user from the database
       const s = message.success;

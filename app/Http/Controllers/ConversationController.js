@@ -67,7 +67,16 @@ class ConversationController {
 
     const conver = yield Database.table('conversations').where({ 'sender_id': se.id,'receiver_id' : re.id }).first();
 
-    Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id});
+    try {
+      // Attempt to login with email and password
+      //const messages = yield Conversation.query().where('name',between)
+      Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id}).whereBetween('created_at',[todate,fromdate]);
+      // Aconversation = yield Database.from('messages').where({ 'conversation_id': conver.id});
+    }catch(err) {
+      const message = " username or password is not correct";
+      yield response.sendView('chat.chathistory',{ message : message });
+    }
+
     Aconversation.map((a) => {
       messages.push(a.message);
     });

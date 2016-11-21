@@ -66,8 +66,14 @@ class RegisterController {
   * activate(request, response) {
     const id = request.param('key')
     console.log("the key to activate is "+id)
-    const token = yield Key.findByOrFail('key',id)
+    try {
+      const token = yield Key.findByOrFail('key',id);
+    }catch(err) {
+      const message = " key is not found";
+      yield response.sendView('welcome',{ message : message });
+    }
 
+    const token = yield Key.findByOrFail('key',id);
     console.log(token)
     if(token) {
       console.log("the token key found from the database is "+token.key)
@@ -86,10 +92,10 @@ class RegisterController {
         .where('id',token.id)
         .delete();
 
-      const affectedRows = yield Database
-        .table('temp_users')
-        .where('id',user_id)
-        .delete();
+      // const affectedRows = yield Database
+      //   .table('temp_users')
+      //   .where('id',user_id)
+      //   .delete();
       yield user.save();
 
       const message = " your account is activated, Now you can login"
