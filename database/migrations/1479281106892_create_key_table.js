@@ -8,6 +8,7 @@ class KeysTableSchema extends Schema {
     this.create('keys', (table) => {
       table.increments()
       table.integer('temp_user_id').unsigned().references('id').inTable('temp_users')
+      table.integer('user_id').unsigned().references('id').inTable('users')
       table.string('key');
       table.string('type');
       table.integer('is_used');
