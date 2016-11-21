@@ -28,12 +28,20 @@ class ConversationController {
 
   //-------------------------------------------------------------
   *getUsers(request,response){
-
-    var users = yield User.all();
-
+    const loggedUser = yield request.session.get('loggedUser');
+    console.log("the logges user in the getUsers method is",loggedUser);
+    var users = [];
+    var use = yield User.all();
+    use.forEach(function(user) {
+      console.log("test")
+      if(user.username==loggedUser) {
+        console.log("found",user.username);
+        return;
+      }
+      users.push(user.username);
+    })
     response.json(users);
     return;
-
   }
 
   //-------------------------------------------------------------

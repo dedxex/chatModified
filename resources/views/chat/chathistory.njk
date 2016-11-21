@@ -10,7 +10,7 @@
     $.get( "http://localhost:3333/getusers/", function( data ) {
       $.each(data, function(index, value){
         console.log("val",value);
-        $('#to').append($('<option>').text(value.username));
+        $('#to').append($('<option>').text(value));
       });
     });
 
