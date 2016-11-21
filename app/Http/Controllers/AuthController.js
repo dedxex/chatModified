@@ -30,12 +30,18 @@ class AuthController {
       error: 'Invalid Credentials'
     }
 
-    // Attempt to login with email and password
-    const authCheck = yield request.auth.attempt(email,password);
-    if(!authCheck) {
+    try {
+      // Attempt to login with email and password
+      const authCheck = yield request.auth.attempt(email,password);
+    }catch(err) {
       const message = "username or password is not correct";
-      yield request.sendView('auth.login',{ message : message });
+      yield response.sendView('auth.login',{ message : message });
     }
+
+    // if(!authCheck) {
+    //   const message = "username or password is not correct";
+    //   yield request.sendView('auth.login',{ message : message });
+    // }
     if (authCheck) {
       //getting credentials of the logged in user from the database
       const s = message.success;
