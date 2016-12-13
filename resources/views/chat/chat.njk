@@ -32,11 +32,100 @@
   var users = "{{users}}"
   console.log("active users are",user_name)
 </script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-messaging.js"></script>
+  <script>
+    var config = {
+        apiKey: "AIzaSyA6IVvmUJ9wb8YetHtN9E-I4KiGBgV3nC0",
+        authDomain: "chat-aa539.firebaseapp.com",
+        databaseURL: "https://chat-aa539.firebaseio.com",
+        storageBucket: "chat-aa539.appspot.com",
+        messagingSenderId: "104742087727"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script>
+    //==================================================================
+      // Retrieve Firebase Messaging object.
+
+      const messaging = firebase.messaging();
+      //requesting permission to recieve notificaiton
+      messaging.requestPermission()
+      .then(function() {
+        console.log('Notification permission granted.');
+        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+        // ...
+      })
+      .catch(function(err) {
+        console.log('Unable to get permission to notify.', err);
+      });
+
+      //recieve the current registration token
+
+        // Get Instance ID token. Initially this makes a network call, once retrieved
+        // subsequent calls to getToken will return from cache.
+        messaging.getToken()
+        .then(function(currentToken) {
+          if (currentToken) {
+            sendTokenToServer(currentToken);
+            updateUIForPushEnabled(currentToken);
+          } else {
+            // Show permission request.
+            console.log('No Instance ID token available. Request permission to generate one.');
+            // Show permission UI.
+            updateUIForPushPermissionRequired();
+            setTokenSentToServer(false);
+          }
+        })
+        .catch(function(err) {
+          console.log('An error occurred while retrieving token. ', err);
+          //showToken('Error retrieving Instance ID token. ', err);
+          //setTokenSentToServer(false);
+        });
+      //}
+    //monitoring token refresh
+
+    // Callback fired if Instance ID token is updated.
+    messaging.onTokenRefresh(function() {
+      messaging.getToken()
+      .then(function(refreshedToken) {
+        console.log('Token refreshed.');
+        // Indicate that the new Instance ID token has not yet been sent to the
+        // app server.
+        setTokenSentToServer(false);
+        // Send Instance ID token to app server.
+        sendTokenToServer(refreshedToken);
+        // ...
+      })
+      .catch(function(err) {
+        console.log('Unable to retrieve refreshed token ', err);
+        showToken('Unable to retrieve refreshed token ', err);
+      });
+    });
+    //onmessage event
+    messaging.onMessage(function(payload) {
+      console.log("Message received. ", payload);
+      // ...
+    });
+    //asking for messaging permission
+    messaging.requestPermission()
+    .then(function() {
+      console.log('Notification permission granted.');
+      // TODO(developer): Retrieve an Instance ID token for use with FCM.
+      // ...
+    })
+    .catch(function(err) {
+      console.log('Unable to get permission to notify.', err);
+    });
+  </script>
+</script>
 <!--================================================================-->
 <script>
   $(document).ready(function(){
 
-//===========================================================
     var user_name="{{users.loggedUser}}";
     var users = "{{users}}"
     var activeUsers={};

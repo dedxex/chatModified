@@ -1,5 +1,5 @@
 'use strict'
-
+const Helpers = use('Helpers')
 /*
  |--------------------------------------------------------------------------
  | Router
@@ -49,5 +49,8 @@ Route.post('/codeverification','ForgerpasswordController.getcode');
 Route.post('/changepassword','ForgerpasswordController.changepassword');
 
 
+//images
+Route.get('image','ImageController.index');
+Route.post('store-image','ImageController.storeimage');
 
 

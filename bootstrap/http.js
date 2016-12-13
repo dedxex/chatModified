@@ -75,7 +75,8 @@ module.exports = function (callback) {
        |   Here we register socket.js file to work with socket.io
        |
        */
-      use("App/Http/socket")
+      use("App/Http/socket");
+        use("App/Http/firebase");
       /*
       |--------------------------------------------------------------------------
       | Load Database Factory
