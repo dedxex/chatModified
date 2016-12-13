@@ -52,5 +52,6 @@ Route.post('/changepassword','ForgerpasswordController.changepassword');
 //images
 Route.get('image','ImageController.index');
 Route.post('store-image','ImageController.storeimage');
+Route.get('image/:id','ImageController.getimage');
 
 
